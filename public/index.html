@@ -2,28 +2,22 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Netlify Puppeteer Demo</title>
+	<title>Screenshot&PDF</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main>
-        <h1>Netlify Puppeteer Demo</h1>
-        <p>A demonstration of how to use Puppeteer in a  Netlify function to take a screenshot of a web page.</p>
-        <p>
-            <a href="https://github.com/ireade/netlify-puppeteer-screenshot-demo">🛠View the source of this website</a><br>
-            <a href="https://bitsofco.de/how-to-use-puppeteer-in-a-netlify-aws-lambda-function/">📖 Read the article</a>
-        </p>
+    <main style="text-align: center;">
+        <h1>Screenshoto</h1>
+        <h2>URL to PDF</h2>
+        <p><a href="/api/pdf/url=https://dev.to/">https://screenshoto.netlify.com/api/pdf/url=https://dev.to/</a></p>
+        
+        <h2>Screenshot</h2>
+        <p><a href="/api/screenshot/url=https://dev.to/">https://screenshoto.netlify.com/api/screenshot/url=https://dev.to/</a></p>
 
-        <form method="GET">
-            <input type="url" id="page" aria-label="URL" value="https://bitsofco.de">
-            <button type="submit">Screenshot!</button>
-        </form>
-
-        <div id="result" aria-live="polite"></div>
     </main>
     
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
 </body>
 </html>

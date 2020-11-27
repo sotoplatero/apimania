@@ -1,5 +1,5 @@
 const chromium = require('chrome-aws-lambda');
-
+var slugify = require('slugify')
 // the browser path
 const localChrome = process.env.PATH_CHROME;
 
@@ -24,16 +24,17 @@ exports.handler = async (event, context) => {
     await page.goto(url, { waitUntil: 'networkidle2' });
     const title = await page.title();
 
-    const screenshot = await page.screenshot({ encoding: 'base64' });
+    const pdf = await page.pdf();
     await browser.close();
-    
+  
     return {
+        headers: {
+            "Content-type": "application/pdf",
+            "content-disposition": "attachment; filename=" + slugify(title) + ".pdf"
+          },
         statusCode: 200,
-        headers: { 'Content-type': 'image/jpeg' },
-        body: screenshot,   
-        isBase64Encoded: true            
-    }     
-
-
+        body: pdf.toString("base64"),
+        isBase64Encoded: true        
+    }
 
 }
