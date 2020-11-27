@@ -18,14 +18,14 @@ document.querySelector('button[type="submit"]').addEventListener('click', (e) =>
     if (!pageToScreenshot) return document.getElementById('result').textContent = 'Please enter a page URL';
 
     const options = {
-        method: "POST",
+        method: "GET",
         headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify({ pageToScreenshot: pageToScreenshot })
+        // body: JSON.stringify({ pageToScreenshot: pageToScreenshot })
     };
 
     document.getElementById('result').textContent = "Please wait..."
 
-    fetch("/.netlify/functions/take-screenshot", options)
+    fetch("/.netlify/funtions/screenshot?url=" + pageToScreenshot, options)
         .then((res) => res.json())
         .then((res) => {
             
