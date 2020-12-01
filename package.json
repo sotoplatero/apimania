@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prettier/plugin-php": "^0.16.0",
     "chrome-aws-lambda": "^5.5.0",
     "highlight.js": "^10.4.0",
     "prettier": "^2.2.1",
