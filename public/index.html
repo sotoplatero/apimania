@@ -20,25 +20,33 @@
             --font-color: #f5f5f5;
             --color-grey: #ccc;
             --color-darkGrey: #777;
-        }                
+        }   
+        h1,h4{ font-weight: 600;}  
+        body{ margin: 5rem 0; }           
     </style>
 </head>
 <body>
     <main class="container">
         <div class="">
-            <h1 class="text-center">
-                <b>
-                    <span class="text-error">API</span>MANIA
-                </b>
+            <h1 class="">
+                <span class="text-error">API</span>MANIA
             </h1>
-            <h3>Create a <b>pdf</b> from a web.</h3>
-            <p >Ex: <a href="/api/pdf?url=https://dev.to/">/api/pdf?url=https://dev.to/</a></p>
+            <h4>Create a pdf from a web.</h4>
+            <p >Convert a web page into a pdf file passing it as a parameter the url address. Ex: <a href="/api/pdf?url=https://dev.to/"><b>/api/pdf</b>?url=https://dev.to/</a></p>
 
-            <h3>Take a <strong>screenshot</strong> of a web.</h3>
-            <p >Ex: <a href="/api/screenshot?url=https://dev.to/">/api/screenshot?url=https://dev.to/</a></p>
+            <h4>Take a <strong>screenshot</strong> of a web.</h4>
+            <p >Ex: <a href="/api/screenshot?url=https://dev.to/"><b>/api/screenshot</b>?url=https://dev.to/</a></p>
 
-            <h3>Create image from code</h3>
-            <p></p>
+            <h4>Create image from code</h4>
+            <p>Create an image of the formatted code. At the moment only supports: javascript, typescript, json, yaml, css, scss, less, vue, html. </p>
+            <p>Parameters:</p>
+            <ul>
+                <li><b>code:</b> <i class="text-grey is-small">(required)</i> Code you want to convert in image.</li>
+                <li><b>lang:</b> <i class="text-grey is-small">(optional)</i> Language of the code to convert. <span class="is-small">Default: javascript</span></li>
+            </ul>
+
+            Ex javascript: <a href="/api/screencode?code=if(true){alert('hola mundo!!')}"><b>/api/screencode</b>?code=if(true){alert('hola mundo!!')}</a><br>
+            Ex json: <a href="/api/screencode?code={%22allOn%22:%20%22Single%22,%20%22Line%22:%20%22example%22,%22noSpace%22:true,%22quote%22:%20{%27singleQuote%27:%20%27example%27,%22indented%22:%20true,},%22phoneNumbers%22:%20[{%22type%22:%20%22home%22,%22number%22:%20%22212%20555-1234%22},{%22type%22:%20%22office%22,%22trailing%22:%20%22commas%20by%20accident%22},],}&lang=json"><b>/api/screencode</b>?code={%22allOn%22:%20%22Single%22,%20%22Line%22:%20%22example%22,%22noSpace%22:true,%22quote%22:%20{%27singleQuote%27:%20%27example%27,%22indented%22:%20true,},%22phoneNumbers%22:%20[{%22type%22:%20%22home%22,%22number%22:%20%22212%20555-1234%22},{%22type%22:%20%22office%22,%22trailing%22:%20%22commas%20by%20accident%22},],}</a>
         </div>
 
     </main>

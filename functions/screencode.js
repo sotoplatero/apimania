@@ -1,8 +1,6 @@
 const chromium = require('chrome-aws-lambda');
 const hljs = require('highlight.js');
 const prettier = require("prettier");
-// const Prism = require('prismjs');
-
 // the browser path
 const localChrome = process.env.PATH_CHROME;
 
@@ -11,6 +9,8 @@ exports.handler = async (event, context) => {
     let {lang, code, theme} = event.queryStringParameters;
 
     theme = theme || 'androidstudio'
+    lang = lang || 'babel'
+    lang = (lang==='javascript') ? 'babel' : lang;
 
     try {
 
@@ -23,9 +23,10 @@ exports.handler = async (event, context) => {
         });
         
         const page = await browser.newPage();
-        await page.goto('http://localhost:8888/blank.html', { waitUntil: 'networkidle2' });
+        const host = (process.env.ENV === 'local') ? 'http://localhost:8888' : 'https://apimania.netlify.com'
+        await page.goto( host + '/blank.html', { waitUntil: 'networkidle2' });
     
-        let prettierCode = prettier.format(code, { parser: "babel" });
+        let prettierCode = prettier.format(code, { parser: lang});
     
         const highlightedCode = hljs.highlightAuto(prettierCode).value
         // const highlightedCode = Prism.highlight(prettierCode, Prism.languages.javascript, 'javascript');
