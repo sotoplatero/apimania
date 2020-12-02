@@ -9,7 +9,7 @@ const localChrome = process.env.PATH_CHROME;
 exports.handler = async (event, context) => {
 
     let {lang, code, theme} = event.queryStringParameters;
-    console.log(event.headers.host)
+
     theme = theme || 'androidstudio'
 
     try {
