@@ -1,5 +1,6 @@
 const chromium = require('chrome-aws-lambda');
-const hljs = require('highlight.js');
+// const hljs = require('highlight.js');
+const hljs = require("highlight.js/lib/core");  
 const prettier = require("prettier");
 // the browser path
 const localChrome = process.env.PATH_CHROME;
@@ -11,6 +12,8 @@ exports.handler = async (event, context) => {
     theme = theme || 'androidstudio'
     lang = lang || 'babel'
     lang = (lang==='javascript') ? 'babel' : lang;
+
+    hljs.registerLanguage(lang, require('highlight.js/lib/languages/xml'));
 
     try {
 
@@ -28,7 +31,7 @@ exports.handler = async (event, context) => {
     
         let prettierCode = prettier.format(code, { parser: lang});
     
-        const highlightedCode = hljs.highlightAuto(prettierCode).value
+        const highlightedCode = hljs.highlight(lang,prettierCode).value
         // const highlightedCode = Prism.highlight(prettierCode, Prism.languages.javascript, 'javascript');
     
         let content = `
