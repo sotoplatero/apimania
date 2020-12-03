@@ -8,7 +8,6 @@ exports.handler = async (event, context) => {
     theme = theme || 'androidstudio'
     lang = lang || 'babel'
     lang = (lang==='javascript') ? 'babel' : lang;
-    console.log(code)
     try {
     
         let prettierCode = prettier.format(code, { parser: lang });
