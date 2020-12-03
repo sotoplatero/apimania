@@ -1,4 +1,4 @@
-const hljs = require('highlight.js');
+const hljs = require("highlight.js/lib/core");
 const prettier = require("prettier");
 
 exports.handler = async (event, context) => {
@@ -12,7 +12,9 @@ exports.handler = async (event, context) => {
     try {
     
         let prettierCode = prettier.format(code, { parser: lang });
-        const highlightedCode = hljs.highlightAuto(prettierCode).value
+
+        hljs.registerLanguage(lang, require('highlight.js/lib/languages/xml'));        
+        const highlightedCode = hljs.highlight(lang, prettierCode).value
         return {
             statusCode: 200,
             // headers: { 'Content-Type':'application/json'},            

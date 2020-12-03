@@ -42,6 +42,7 @@ exports.handler = async (event, context) => {
         let content = `
             <!doctype html>
             <head>
+                <meta http-equiv="content-type" content="text/html; charset=UTF-8">
                 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.5/styles/${theme}.min.css">
                 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js"></script>
                 <script>hljs.initHighlightingOnLoad();</script>
