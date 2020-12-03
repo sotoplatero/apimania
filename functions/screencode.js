@@ -33,6 +33,7 @@ exports.handler = async (event, context) => {
         // Open page base
         const page = await browser.newPage();
         const host = (process.env.ENV === 'local') ? 'http://localhost:8888' : 'https://apimania.netlify.app'
+        console.log(encodeURIComponent(code))
         await page.goto( host + `/test.html?code=${encodeURIComponent(code)}&lang=${lang}`,{ waitUntil: 'networkidle0' });
 
         // await page.evaluate( () => {
