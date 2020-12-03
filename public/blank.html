@@ -1,26 +1,14 @@
 <!doctype html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.5/styles/monokai.min.css">
+    <style>pre{display: inline-block; font-size:1.3rem;}</style>
     <script src="//unpkg.com/prettier@2.2.1/standalone.js"></script>
     <script src="//unpkg.com/prettier@2.2.1/parser-babel.js"></script>
     <script src="//unpkg.com/prettier@2.2.1/parser-html.js"></script>
     <script src="//unpkg.com/prettier@2.2.1/parser-postcss.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js"></script>
-    <style>pre{display: inline-block;font-size:1.3rem;}</style>
 </head><body>
     <pre><code></code></pre>
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        const lang = urlParams.get('lang');
-
-        var prettierCode = prettier.format( code, {
-            parser: lang,
-            plugins: prettierPlugins,
-        });
-
-        document.querySelector('code').innerHTML = prettierCode;
-        hljs.initHighlightingOnLoad();
-    </script>
 </body></html>
