@@ -33,19 +33,19 @@ exports.handler = async (event, context) => {
         // Open page base
         const page = await browser.newPage();
         const host = (process.env.ENV === 'local') ? 'http://localhost:8888' : 'https://apimania.netlify.com'
-        await page.goto( host + `/blank.html`,{ waitUntil: 'networkidle0' });
+        await page.goto( host + `/test.html?code=${encodeURIComponent(code)}&lang=${lang}`,{ waitUntil: 'networkidle0' });
 
-        await page.evaluate( ( code, lang ) => {
-            code = code.replace(/\n/g,'')
-            var prettierCode = prettier.format( code, {
-                parser: lang,
-                plugins: prettierPlugins,
-            });
-            let codeEle = document.querySelector('pre code')
-            codeEle.innerText =  prettierCode;
-            hljs.highlightBlock(codeEle);   
+        // await page.evaluate( ( code, lang ) => {
+        //     code = code.replace(/\n/g,'')
+        //     var prettierCode = prettier.format( code, {
+        //         parser: lang,
+        //         plugins: prettierPlugins,
+        //     });
+        //     let codeEle = document.querySelector('pre code')
+        //     codeEle.innerText =  prettierCode;
+        //     hljs.highlightBlock(codeEle);   
 
-        }, code, lang)
+        // }, code, lang)
 
         const elCode = await page.$('pre');
         const screenshot = await elCode.screenshot({ encoding: 'base64' });

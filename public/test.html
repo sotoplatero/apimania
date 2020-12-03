@@ -11,16 +11,18 @@
     <script src="//unpkg.com/prettier@2.2.1/parser-postcss.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js"></script>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        const lang = urlParams.get('lang');
-
-        var prettierCode = prettier.format( code, {
-            parser: lang,
-            plugins: prettierPlugins,
-        });
-
-        document.querySelector('pre').innerHTML = '<code>' + prettierCode + '</code>';
-        hljs.initHighlightingOnLoad();
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const lang = urlParams.get('lang');
+    
+            var prettierCode = prettier.format( code, {
+                parser: lang,
+                plugins: prettierPlugins,
+            });
+    
+            document.querySelector('pre').innerHTML = '<code>' + prettierCode + '</code>';
+            hljs.initHighlightingOnLoad();
+        })
     </script>
 </body></html>
