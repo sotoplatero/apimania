@@ -17,7 +17,7 @@ exports.handler = async (event, context) => {
 
     theme = theme || 'androidstudio'
     lang = lang || 'babel'
-    lang = (lang==='javascript') ? 'babel' : lang;
+    lang = (lang==='javascript') ? 'babel-flow' : lang;
 
     // try {
 
@@ -36,14 +36,13 @@ exports.handler = async (event, context) => {
         await page.goto( host + `/blank.html`,{ waitUntil: 'networkidle0' });
 
         await page.evaluate( ( code, lang ) => {
-    
+            code = code.replace(/\n/,'')
             var prettierCode = prettier.format( code, {
                 parser: lang,
                 plugins: prettierPlugins,
             });
-    
             let codeEle = document.querySelector('pre code')
-            codeEle.innerHTML =  prettierCode;
+            codeEle.innerText =  prettierCode;
             hljs.highlightBlock(codeEle);   
 
         }, code, lang)
