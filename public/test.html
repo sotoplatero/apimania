@@ -15,7 +15,7 @@
     </style>
 </head><body>
     <pre><code></code></pre>
-    <!-- <script>
+    <script>
         document.addEventListener('DOMContentLoaded', (event) => {
 
             const urlParams = new URLSearchParams(window.location.search);
@@ -28,10 +28,9 @@
                 plugins: prettierPlugins,
             });
     
-            let pre = document.querySelector('pre')
-            pre.classList = add('lang')
-            pre.innerHTML = '<code>' + prettierCode + '</code>';
-            hljs.highlightBlock(pre);
+            let preCode = document.querySelector('pre code')
+            preCode.innerHTML = prettierCode;
+            hljs.highlightBlock(preCode);
         })
-    </script> -->
+    </script>
 </body></html>
