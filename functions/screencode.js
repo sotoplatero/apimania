@@ -18,15 +18,15 @@ exports.handler = async (event, context) => {
     theme = theme || 'androidstudio'
     lang = lang || 'babel'
     lang = (lang==='javascript') ? 'babel' : lang;
-
+    console.log(code)
     // hljs.registerLanguage(lang, require('highlight.js/lib/languages/xml'));
 
-    try {
+    // try {
 
         const host = (process.env.ENV === 'local') ? 'http://localhost:8888' : 'https://apimania.netlify.com'
-        const response = await got( host + `/.netlify/functions/highlight?code=${code}&lang=${lang}`)
-        const highlightedCode = response.body
-        console.log(response.body)
+        // const response = await got( host + `/.netlify/functions/highlight?code=${code}&lang=${lang}`)
+        // const highlightedCode = response.body
+        // console.log(response.body)
 
         const browser = await chromium.puppeteer.launch({
             ignoreDefaultArgs: ['--disable-extensions'],
@@ -37,21 +37,34 @@ exports.handler = async (event, context) => {
         });
         
         const page = await browser.newPage();
-        await page.goto( host + '/blank.html', { waitUntil: 'networkidle2' });
-    
+        await page.goto( host + `/blank.html?code=${code}$lang=${lang}`, { waitUntil: 'networkidle0' });
+        
         let content = `
             <!doctype html>
             <head>
-                <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.5/styles/${theme}.min.css">
-                <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js"></script>
-                <script>hljs.initHighlightingOnLoad();</script>
-                <style>pre{display: inline-block;font-size:1.3rem;}</style>
+            <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.5/styles/${theme}.min.css">
+            <script src="https://unpkg.com/prettier@2.2.1/standalone.js"></script>
+            <script src="https://unpkg.com/prettier@2.2.1/parser-babel.js"></script>
+            <script src="https://unpkg.com/prettier@2.2.1/parser-html.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.4.0/highlight.min.js"></script>
+            <style>pre{display: inline-block;font-size:1.3rem;}</style>
             </head><body>
-                <pre><code>${highlightedCode}</code></pre>
-            </body></html>`;
-    
-        await page.setContent(content);
-    
+            <pre><code></code></pre>
+            <script>
+                var prettierCode = prettier.format( "${code}", {
+                    parser: "${lang}",
+                    plugins: prettierPlugins,
+                });
+                document.querySelector('code').innerHTML = prettierCode;
+                hljs.initHighlightingOnLoad();
+            </script>
+            </body></html>
+        `;
+        
+        // page.goto(`data:text/html,${content}`);
+        // await page.setContent(content);
+        // page.waitForNavigation()
         const elCode = await page.$('pre');
         const screenshot = await elCode.screenshot({ encoding: 'base64' });
         await browser.close();
@@ -63,15 +76,15 @@ exports.handler = async (event, context) => {
             isBase64Encoded: true            
         }     
 
-    } catch (e) {
+    // } catch (e) {
 
-        return {
-            headers: { 'Content-Type':'application/json'},            
-            statusCode: 500,
-            body: JSON.stringify({error: e}),   
-        }     
+    //     return {
+    //         headers: { 'Content-Type':'application/json'},            
+    //         statusCode: 500,
+    //         body: JSON.stringify({error: e}),   
+    //     }     
 
-    }
+    // }
     
 
 }

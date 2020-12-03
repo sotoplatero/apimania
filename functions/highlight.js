@@ -1,5 +1,8 @@
-const hljs = require('highlight.js');
-const prettier = require("prettier");
+const hljs = require("highlight.js/lib/core");
+const prettier = require("prettier/standalone");
+const parserBabel = require("prettier/parser-babel");
+const parserHtml = require("prettier/parser-html");
+const parserPostcss = require("prettier/parser-postcss");
 
 exports.handler = async (event, context) => {
 
@@ -8,25 +11,30 @@ exports.handler = async (event, context) => {
     theme = theme || 'androidstudio'
     lang = lang || 'babel'
     lang = (lang==='javascript') ? 'babel' : lang;
-    try {
+    // try {
     
-        let prettierCode = prettier.format(code, { parser: lang });
-        const highlightedCode = hljs.highlightAuto(prettierCode).value
+        let prettierCode = prettier.format(code, { 
+            parser: lang, 
+            plugins: [parserBabel, parserHtml, parserPostcss], 
+        });
+
+        hljs.registerLanguage(lang, require('highlight.js/lib/languages/xml'));        
+        const highlightedCode = hljs.highlight(lang, prettierCode).value
         return {
             statusCode: 200,
             // headers: { 'Content-Type':'application/json'},            
             body: highlightedCode,   
         }     
    
-    } catch (e) {
+    // } catch (e) {
 
-        return {
-            headers: { 'Content-Type':'application/json'},            
-            statusCode: 500,
-            body: JSON.stringify({error: e}),   
-        }     
+    //     return {
+    //         headers: { 'Content-Type':'application/json'},            
+    //         statusCode: 500,
+    //         body: JSON.stringify({error: e}),   
+    //     }     
     
-    }
+    // }
     
 
     
