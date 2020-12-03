@@ -8,8 +8,7 @@ exports.handler = async (event, context) => {
     theme = theme || 'androidstudio'
     lang = lang || 'babel'
     lang = (lang==='javascript') ? 'babel' : lang;
-    console.log(code)
-    try {
+    // try {
     
         let prettierCode = prettier.format(code, { parser: lang });
 
@@ -21,15 +20,15 @@ exports.handler = async (event, context) => {
             body: highlightedCode,   
         }     
    
-    } catch (e) {
+    // } catch (e) {
 
-        return {
-            headers: { 'Content-Type':'application/json'},            
-            statusCode: 500,
-            body: JSON.stringify({error: e}),   
-        }     
+    //     return {
+    //         headers: { 'Content-Type':'application/json'},            
+    //         statusCode: 500,
+    //         body: JSON.stringify({error: e}),   
+    //     }     
     
-    }
+    // }
     
 
     

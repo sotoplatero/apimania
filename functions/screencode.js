@@ -21,7 +21,7 @@ exports.handler = async (event, context) => {
 
     // hljs.registerLanguage(lang, require('highlight.js/lib/languages/xml'));
 
-    try {
+    // try {
 
         const host = (process.env.ENV === 'local') ? 'http://localhost:8888' : 'https://apimania.netlify.com'
         const response = await got( host + `/.netlify/functions/highlight?code=${code}&lang=${lang}`)
@@ -64,15 +64,15 @@ exports.handler = async (event, context) => {
             isBase64Encoded: true            
         }     
 
-    } catch (e) {
+    // } catch (e) {
 
-        return {
-            headers: { 'Content-Type':'application/json'},            
-            statusCode: 500,
-            body: JSON.stringify({error: e}),   
-        }     
+    //     return {
+    //         headers: { 'Content-Type':'application/json'},            
+    //         statusCode: 500,
+    //         body: JSON.stringify({error: e}),   
+    //     }     
 
-    }
+    // }
     
 
 }
