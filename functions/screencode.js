@@ -36,7 +36,7 @@ exports.handler = async (event, context) => {
         await page.goto( host + `/blank.html`,{ waitUntil: 'networkidle0' });
 
         await page.evaluate( ( code, lang ) => {
-            code = code.replace(/\n/,'')
+            code = code.replace(/\n/g,'')
             var prettierCode = prettier.format( code, {
                 parser: lang,
                 plugins: prettierPlugins,
