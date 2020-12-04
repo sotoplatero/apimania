@@ -1,9 +1,5 @@
 const chromium = require('chrome-aws-lambda');
-// const hljs = require('highlight.js');
-const got = require('got');
-// const hljs = require("highlight.js/lib/core");  
-// const prettier = require("prettier");
-// the browser path
+
 const localChrome = process.env.PATH_CHROME;
 
 exports.handler = async (event, context) => {
@@ -19,8 +15,7 @@ exports.handler = async (event, context) => {
     lang = lang || 'babel'
     lang = (lang==='javascript') ? 'babel-flow' : lang;
 
-    // try {
-
+    try {
         
         const browser = await chromium.puppeteer.launch({
             ignoreDefaultArgs: ['--disable-extensions'],
@@ -64,15 +59,15 @@ exports.handler = async (event, context) => {
             isBase64Encoded: true            
         }     
 
-    // } catch (e) {
+    } catch (e) {
 
-    //     return {
-    //         headers: { 'Content-Type':'application/json'},            
-    //         statusCode: 500,
-    //         body: JSON.stringify({error: e}),   
-    //     }     
+        return {
+            headers: { 'Content-Type':'application/json'},            
+            statusCode: 500,
+            body: JSON.stringify({error: e}),   
+        }     
 
-    // }
+    }
     
 
 }
