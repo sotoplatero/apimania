@@ -14,9 +14,11 @@
     "chrome-aws-lambda": "^5.5.0",
     "got": "^11.8.0",
     "highlight.js": "^10.4.0",
+    "himalaya": "^1.1.0",
     "prettier": "^2.2.1",
     "puppeteer-core": "^5.5.0",
     "slugify": "^1.4.6",
-    "tabletojson": "^2.0.4"
+    "tabletojson": "^2.0.4",
+    "xml-js": "^1.6.11"
   }
 }
