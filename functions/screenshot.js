@@ -5,7 +5,7 @@ const localChrome = process.env.PATH_CHROME;
 
 exports.handler = async (event, context) => {
 
-    const url = event.queryStringParameters.url 
+    const { url, el } = event.queryStringParameters.url 
 
     if ( !url ) return {
         statusCode: 400,
@@ -24,7 +24,13 @@ exports.handler = async (event, context) => {
     await page.goto(url, { waitUntil: 'networkidle2' });
     const title = await page.title();
 
-    const screenshot = await page.screenshot({ encoding: 'base64' });
+    if(el) {
+        const el = await page.$(el);
+        const screenshot = await el.screenshot({ encoding: 'base64' });
+    } else {
+        const screenshot = await page.screenshot({ encoding: 'base64' });
+    }
+
     await browser.close();
     
     return {

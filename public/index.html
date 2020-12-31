@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="https://yarnpkg.com/en/package/normalize.css">
     <link rel="stylesheet" href="https://unpkg.com/chota@latest">
     <style>
         body {
@@ -22,7 +23,8 @@
             --color-darkGrey: #777;
         }   
         h1,h4{ font-weight: 600;}  
-        body{ margin: 5rem 0; }           
+        body{ margin: 5rem 0; }      
+        h4{ margin-top: 4rem;  }     
     </style>
 </head>
 <body>
@@ -32,27 +34,34 @@
                 <span class="text-error">API</span>MANIA
             </h1>
             <h4>Create a pdf from a web.</h4>
-            <p >Convert a web page into a pdf file passing it as a parameter the url address. Ex: <a href="/api/pdf?url=https://dev.to/"><b>/api/pdf</b>?url=https://dev.to/</a></p>
+            <p >Convert a web page into a pdf file passing it as a parameter the url address. Ex: <a href="/api/pdf?url=https://dev.to/" target="_blank"><b>/api/pdf</b>?url=https://dev.to/</a></p>
 
             <h4>Take a <strong>screenshot</strong> of a web.</h4>
-            <p >Ex: <a href="/api/screenshot?url=https://dev.to/"><b>/api/screenshot</b>?url=https://dev.to/</a></p>
+            <p >Ex: <a href="/api/screenshot?url=https://dev.to/" target="_blank"><b>/api/screenshot</b>?url=https://dev.to/</a></p>
 
             <h4>Create image from code. <small>(LAB)</small></h4>
-            <p>Create an image of the formatted code.
-                <!-- , <a href="/api/screencode?lang=vue&code=%3Ctemplate%3E%3Cp%3ETemplates%20are%20formatted%20as%20well...%3C/p%3E%3C/template%3E%3Cscript%3Elet%20Prettier%20=%20format%20=%3E%20{%20your.js(%27though%27)%20}%3C/script%3E%3Cstyle%3E.and%20{%20css:%20too%20!important%20}%3C/style%3E" target="_blank">vue</a>, <a href="/api/screencode?lang=html&code=%3C!DOCTYPE%20html%3E%3CHTML%20CLASS=%22no-js%20mY-ClAsS%22%3E%3CHEAD%3E%3CMETA%20CHARSET=%22utf-8%22%3E%3CTITLE%3EMy%20tITlE%3C/TITLE%3E%3CMETA%20NAME=%22description%22%20content=%22My%20CoNtEnT%22%3E%3C/HEAD%3E%3Cbody%3E%3CP%3EHello%20world!%3CBR%3E%20This%20is%20HTML5%20Boilerplate.%3C/P%3E%3CSCRIPT%3Ewindow.ga%20=%20function%20()%20{%20ga.q.push(arguments)%20};%20ga.q%20=%20[];%20ga.l%20=%20+new%20Date;ga(%27create%27,%20%27UA-XXXXX-Y%27,%20%27auto%27);%20ga(%27send%27,%20%27pageview%27)%3C/SCRIPT%3E%3CSCRIPT%20src=%22https://www.google-analytics.com/analytics.js%22%20ASYNC%20DEFER%3E%3C/SCRIPT%3E%3C/body%3E%3C/HTML%3E" target="_blank">html</a>. </p> -->
-            <p>Parameters:</p>
-            <table>
-                <tr>
-                    <td>code:</td>
-                    <td>encodeURIComponent(code) you want to convert in image.</td>
-                </tr>
-                <tr>
-                    <td>lang:</td>
-                    <td>Language of the code: javascript, css, scss, json.</td>
-                </tr>
-            </table>
-            Ex: <a href="/api/screencode?lang=javascript&code=function%20%24initHighlight(block%2C%20cls)%20%7Btry%20%7Bif%20(cls.search(%2F%08no-highlight%08%2F)%20!%3D%20-1)return%20process(block%2C%20true%2C%200x0F)%20%2B%60%20class%3D%22%24%7Bcls%7D%22%60%3B%7D%20catch%20(e)%20%7B%2F*%20handle%20exception%20*%2F%7Dfor%20(var%20i%20%3D%200%20%2F%202%3B%20i%20%3C%20classes.length%3B%20i%2B%2B)%20%7Bif%20(checkCondition(classes%5Bi%5D)%20%3D%3D%3D%20undefined)console.log(%22%20undefined%22)%3B%7Dreturn%20(%3Cdiv%3E%3Cweb-component%3E%7Bblock%7D%3C%2Fweb-component%3E%3C%2Fdiv%3E)%7D" target="_blank">javascript</a>, <a href="/api/screencode?lang=json&code=[{%22title%22:%20%22apples%22,%22count%22:%20[12000,%2020000],%22description%22:%20{%22text%22:%20%22...%22,%20%22sensitive%22:%20false}},{%22title%22:%20%22oranges%22,%22count%22:%20[17500,%20null],%22description%22:%20{%22text%22:%20%22...%22,%20%22sensitive%22:%20false}}]" target="_blank">json</a>, <a href="/api/screencode?lang=css&code=%40media%20(max-width%3A%20480px)%20%7B.bd-examples%20%7Bmargin-right%3A%20-.75rem%3Bmargin-left%3A%20-.75rem%7D.bd-examples%3E%5Bclass%5E%3D%22col-%22%5D%2520%20%7Bpadding-right%3A%20.75rem%3Bpadding-left%3A%20.75rem%3B%7D%7D" target="_blank">css</a>, <a href="/api/screencode?lang=scss&code=nav%20%7Bul%20%7Bmargin%3A%200%3Bpadding%3A%200%3Blist-style%3A%20none%3B%7Dli%20%7B%20display%3A%20inline-block%3B%20%7Da%20%7Bdisplay%3A%20block%3Bpadding%3A%206px%2012px%3Btext-decoration%3A%20none%3B%7D%7D" target="_blank">scss</a>
-   
+
+            <p>
+                Create an image of the formatted code.
+                Parameters:
+                <ul>
+                    <li>code: Encode Code you want to convert in image.</li>
+                    <li>lang: Language of the code: javascript, css, scss, json.</li>
+                </ul>  
+                Ex: <a href="/api/screencode?lang=javascript&code=function%20%24initHighlight(block%2C%20cls)%20%7Btry%20%7Bif%20(cls.search(%2F%08no-highlight%08%2F)%20!%3D%20-1)return%20process(block%2C%20true%2C%200x0F)%20%2B%60%20class%3D%22%24%7Bcls%7D%22%60%3B%7D%20catch%20(e)%20%7B%2F*%20handle%20exception%20*%2F%7Dfor%20(var%20i%20%3D%200%20%2F%202%3B%20i%20%3C%20classes.length%3B%20i%2B%2B)%20%7Bif%20(checkCondition(classes%5Bi%5D)%20%3D%3D%3D%20undefined)console.log(%22%20undefined%22)%3B%7Dreturn%20(%3Cdiv%3E%3Cweb-component%3E%7Bblock%7D%3C%2Fweb-component%3E%3C%2Fdiv%3E)%7D" target="_blank">javascript</a>, <a href="/api/screencode?lang=json&code=[{%22title%22:%20%22apples%22,%22count%22:%20[12000,%2020000],%22description%22:%20{%22text%22:%20%22...%22,%20%22sensitive%22:%20false}},{%22title%22:%20%22oranges%22,%22count%22:%20[17500,%20null],%22description%22:%20{%22text%22:%20%22...%22,%20%22sensitive%22:%20false}}]" target="_blank">json</a>, <a href="/api/screencode?lang=css&code=%40media%20(max-width%3A%20480px)%20%7B.bd-examples%20%7Bmargin-right%3A%20-.75rem%3Bmargin-left%3A%20-.75rem%7D.bd-examples%3E%5Bclass%5E%3D%22col-%22%5D%2520%20%7Bpadding-right%3A%20.75rem%3Bpadding-left%3A%20.75rem%3B%7D%7D" target="_blank">css</a>, <a href="/api/screencode?lang=scss&code=nav%20%7Bul%20%7Bmargin%3A%200%3Bpadding%3A%200%3Blist-style%3A%20none%3B%7Dli%20%7B%20display%3A%20inline-block%3B%20%7Da%20%7Bdisplay%3A%20block%3Bpadding%3A%206px%2012px%3Btext-decoration%3A%20none%3B%7D%7D" target="_blank">scss</a>
+            </p>
+
+            <h4>Convert html tables to json.</h4>
+            <p >
+                Convert all tables on a web page to json format. Ex: <a href="api/table?url=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank">/api/table?url=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes</a>
+            </p>
+
+            <h4>Convert web page to json.</h4>
+            <p >
+                Convert all web page to json format. Ex: <a href="api/html2json?url=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank">/api/<b>html2json</b>?<b>url</b>=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes</a>
+            </p>
+
+
         </div>
 
     </main>
