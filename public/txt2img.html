@@ -2,25 +2,26 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const font = params.get('font').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()) 
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const text = urlParams.get('text');
+        const size = urlParams.get('size') || '32px';
+        const color = urlParams.get('color') || '000';
+        const bg = urlParams.get('bg') || 'fff';
+        const py = urlParams.get('py') || '2px';
+        const px = urlParams.get('px') || '4px';
+
+        const font = urlParams.get('font').replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()) 
         if (font) {
             WebFont.load({
                 google: { families: [ font ] }
             });
         }
-    </script>   
-    <script>
+        
         document.addEventListener('DOMContentLoaded', (event) => {
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const text = urlParams.get('text');
-            const size = urlParams.get('size') || '32px';
-            const color = urlParams.get('color') || '000';
-            const bg = urlParams.get('bg') || 'fff';
-            const py = urlParams.get('py') || '2px';
-            const px = urlParams.get('px') || '4px';
 
             textFormated = `
                 <div 
