@@ -1,0 +1,32 @@
+<!doctype html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const text = urlParams.get('text');
+            const size = urlParams.get('size') || '32px';
+            const color = urlParams.get('color') || '000';
+            const bg = urlParams.get('bg') || 'fff';
+            const py = urlParams.get('py') || '2px';
+            const px = urlParams.get('px') || '4px';
+            console.log(urlParams.entries())
+
+            el = document.getElementById('txt2img');
+            el.innerText = text
+            el.style=`
+                display: inline-block;
+                text-align: center;
+                max-width: 680px;
+                font-size:${size};
+                background-color:#${bg};
+                color:#${color};
+                padding:${py} ${px}
+            `
+
+        })
+    </script>
+</head><body>
+    <span id="txt2img"></span>
+</body></html>

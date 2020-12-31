@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@octokit/rest": "^18.0.12",
     "@prettier/plugin-php": "^0.16.0",
     "cheerio": "^1.0.0-rc.3",
     "chrome-aws-lambda": "^5.5.0",
@@ -19,6 +20,7 @@
     "puppeteer-core": "^5.5.0",
     "slugify": "^1.4.6",
     "tabletojson": "^2.0.4",
+    "twit": "^2.2.11",
     "xml-js": "^1.6.11"
   }
 }
