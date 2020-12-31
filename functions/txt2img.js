@@ -11,8 +11,6 @@ exports.handler = async (event, context) => {
         .map( k => k + '=' + prameters[k] )
         .join('&');
 
-    console.log(prameters)
-
     if ( !prameters.text ) return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Text not defined' })
