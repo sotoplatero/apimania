@@ -4,9 +4,15 @@ const localChrome = process.env.PATH_CHROME;
 
 exports.handler = async (event, context) => {
 
-    let { text, size } = event.queryStringParameters;
+    let prameters = event.queryStringParameters;
 
-    if ( !text ) return {
+    let qs = Object
+        .keys( prameters )
+        .map( k => k + '=' + prameters[k] )
+        .join('&');
+
+    console.log(qs)
+    if ( !prameters.text ) return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Code or Language not defined' })
     }
@@ -24,7 +30,7 @@ exports.handler = async (event, context) => {
         // Open page base
         const page = await browser.newPage();
         const host = (process.env.ENV === 'local') ? 'http://localhost:8888' : 'https://apimania.netlify.app'
-        await page.goto( host + `/txt2img.html?text=${text}`,{ waitUntil: 'networkidle0' });
+        await page.goto( host + `/txt2img.html?${qs}`,{ waitUntil: 'networkidle0' });
 
       
         const elCode = await page.$('#txt2img');
