@@ -12,10 +12,10 @@
         const bg = urlParams.get('bg') || 'fff';
         const py = urlParams.get('py') || '2px';
         const px = urlParams.get('px') || '4px';
+        let font = urlParams.get('font') || 'arial';
 
-        const font = urlParams.get('font')
-        if (font) {
-            font = font.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase()) 
+        if ( font !== 'arial' ) {
+            let font = urlParams.get('font').replace(/(^\w{1})|(\s+\w{1})/g, le => le.toUpperCase()) 
             WebFont.load({
                 google: { families: [ font ] }
             });
@@ -28,7 +28,7 @@
                 <div 
                     id="txt2img"
                     style="
-                        font-family: ${font};
+                        font-family: ${ font }, sans-serif;
                         display: inline-block;
                         text-align: center;
                         max-width: 640px;
