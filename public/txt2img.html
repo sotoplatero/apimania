@@ -13,6 +13,12 @@
         const py = urlParams.get('py') || '2px';
         const px = urlParams.get('px') || '4px';
         let font = urlParams.get('font') || 'arial';
+        const format = urlParams.get('format') || 'auto';
+
+        let height = (format === '16-9') ? '360px' : 
+                        (format === '4-3') ? '480px' :
+                            'auto';
+        let width = format==='auto' ? 'auto' : '640px';
 
         if ( font !== 'arial' ) {
             let font = urlParams.get('font').replace(/(^\w{1})|(\s+\w{1})/g, le => le.toUpperCase()) 
@@ -28,24 +34,28 @@
                 <div 
                     id="txt2img"
                     style="
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
                         font-family: ${ font }, sans-serif;
-                        display: inline-block;
                         text-align: center;
                         max-width: 640px;
+                        height: ${height};
+                        width: ${width};
                         font-size:${size};
                         background-color:#${bg};
                         color:#${color};
                         padding:${py} ${px};
                 ">
-                    ${text}
+                    <p>${text}</p>
                 </div>
             `
             document.querySelector('body').innerHTML = textFormated;
         })
     </script>         
     <style type="text/css">
-        #txt2img {
-
+        #txt2img p {
+            margin: 0;
         }
     </style>
 </head><body>
