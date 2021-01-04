@@ -7,16 +7,16 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const text = urlParams.get('text');
-        const size = urlParams.get('size') || '32px';
+        const size = urlParams.get('size') || '3rem';
         const color = urlParams.get('color') || '000';
         const bg = urlParams.get('bg') || 'fff';
-        const py = urlParams.get('py') || '2px';
-        const px = urlParams.get('px') || '4px';
+        // const py = urlParams.get('py') || '1rem';
+        // const px = urlParams.get('px') || '2rem';
         let font = urlParams.get('font') || 'arial';
         const format = urlParams.get('format') || 'auto';
 
-        let height = (format === '16-9') ? '360px' : 
-                        (format === '4-3') ? '480px' :
+        let height = (format === '16/9') ? '360px' : 
+                        (format === '4/3') ? '480px' :
                             'auto';
         let width = format==='auto' ? 'auto' : '640px';
 
@@ -34,6 +34,7 @@
                 <div 
                     id="txt2img"
                     style="
+                        line-height: 1;
                         display: flex;
                         flex-direction: column;
                         justify-content: center;
@@ -43,9 +44,9 @@
                         height: ${height};
                         width: ${width};
                         font-size:${size};
-                        background-color:#${bg};
-                        color:#${color};
-                        padding:${py} ${px};
+                        background-color:${bg};
+                        color:${color};
+                        padding:1rem 2rem;
                 ">
                     <p>${text}</p>
                 </div>

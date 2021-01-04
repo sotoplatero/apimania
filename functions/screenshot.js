@@ -1,3 +1,4 @@
+
 const chromium = require('chrome-aws-lambda');
 
 // the browser path
@@ -5,7 +6,7 @@ const localChrome = process.env.PATH_CHROME;
 
 exports.handler = async (event, context) => {
 
-    const { url, el } = event.queryStringParameters.url 
+    let  { url, size = 'window' } = event.queryStringParameters
 
     if ( !url ) return {
         statusCode: 400,
@@ -21,14 +22,27 @@ exports.handler = async (event, context) => {
     });
     
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: 'networkidle2' });
+    await page.goto(url, { waitUntil: 'networkidle0' });
     const title = await page.title();
 
-    if(el) {
-        const el = await page.$(el);
-        const screenshot = await el.screenshot({ encoding: 'base64' });
+    let screenshot;
+    console.log(size)
+    if ( /window|full/.test(size) ) {
+
+        screenshot = await page.screenshot({ 
+            encoding: 'base64',
+            fullPage: (size === 'full')
+        });
+
     } else {
-        const screenshot = await page.screenshot({ encoding: 'base64' });
+
+        const el = await page.$(size);
+        if ( !el ) return {
+            statusCode: 400,
+            body: JSON.stringify({ message: 'Element by selector not exist' })
+        }        
+        screenshot = await el.screenshot({ encoding: 'base64' });
+
     }
 
     await browser.close();

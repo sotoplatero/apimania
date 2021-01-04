@@ -2,17 +2,32 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>APIMANIA - Api's for all</title>
+	<title>APIMANIA - API tools</title>
+    <meta name="description" content="Free Web tutorials">
+    <meta name="keywords" content="API, json, screenchot, images">    
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- <link rel="stylesheet" href="style.css"> -->
     <link rel="stylesheet" href="https://yarnpkg.com/en/package/normalize.css">
     <link rel="stylesheet" href="https://unpkg.com/chota@latest">
     <style>
-        body {
-            font-family: monospace;
-        }
-        body > .container {
+        :root {
+          --bg-color: #ffffff;
+          --bg-secondary-color: #f3f3f6;
+          --color-primary: #D43939; 
+          --color-lightGrey: #d2d6dd;
+          --color-grey: #747681;
+          --color-darkGrey: #3f4144;
+          --color-error: #d43939;
+          --color-success: #28bd14;
+          --grid-maxWidth: 120rem;
+          --grid-gutter: 2rem;
+          --font-size: 1.6rem;
+          --font-color: #333333;
+          --font-family-sans: sans-serif;
+          --font-family-mono: monaco, "Consolas", "Lucida Console", monospace;
+        }        
+        .container {
             max-width: 720px;
         }
         body.dark {
@@ -24,7 +39,15 @@
         }   
         h1,h4{ font-weight: 600;}  
         body{ margin: 5rem 0; }      
-        h4{ margin-top: 4rem;  }     
+        h4{ margin-top: 4rem;  }  
+        table { border: 1px solid #ccc; } 
+        td { 
+            padding-right: 1rem; 
+            border: 1px solid #ccc;
+        }
+        footer{
+            margin: 5rem 0;
+        }  
     </style>
 </head>
 <body>
@@ -33,11 +56,61 @@
             <h1 class="">
                 <span class="text-error">API</span>MANIA
             </h1>
+
             <h4>Create a pdf from a web.</h4>
             <p >Convert a web page into a pdf file passing it as a parameter the url address. Ex: <a href="/api/pdf?url=https://dev.to/" target="_blank"><b>/api/pdf</b>?url=https://dev.to/</a></p>
 
             <h4>Take a <strong>screenshot</strong> of a web.</h4>
             <p >Ex: <a href="/api/screenshot?url=https://dev.to/" target="_blank"><b>/api/screenshot</b>?url=https://dev.to/</a></p>
+            <table>
+                <tr>
+                    <td>url</td>
+                    <td>url of the web page</td>
+                    <td><code>required</code></td>
+                </tr>            
+                <tr>
+                    <td>size</td>
+                    <td>Screenshot format: <code>full</code> full page, <code>window</code> only window, element css selector <br> <a href="/api/screenshot?url=https://dev.to&size=full" target="_blank"><b>/api/screenshot</b>?url=https://dev.to&size=full</a><br><a href="/api/screenshot?url=https://dev.to&size=.crayons-story--featured" target="_blank"><b>/api/screenshot</b>?url=https://dev.to&size=.crayons-story--featured</a></td>
+                    <td><code>optional</code> Default <code>window</code></td>
+                </tr>            
+            </table>
+
+            <h4>Convert text to image.</h4>
+            <p >
+                Create image with text content Ex: <a href="/api/txt2img?text=Create%20image%20with%20content%20text&size=7rem&format=16/9&color=red&bg=orange&font=Yellowtail" target="_blank"><b>/api/txt2img</b>?text=Create%20image%20with%20content%20text&size=7rem&format=16/9&color=red&bg=orange&font=Yellowtail</a>
+            </p>
+            <table>
+                <tr>
+                    <td>text</td>
+                    <td>Content text to show in image</td>
+                    <td><code>required</code></td>
+                </tr>
+                <tr>
+                    <td>format</td>
+                    <td>Sets the aspect ratio of the image. Allowed values: <code>16/9</code> and <code>4/3</code>.</td>
+                    <td><code>optional</code><i>Default: empty value.</i> Will set the width and height according to the size of the text</td>
+                </tr>
+               <tr>
+                    <td>color</td>
+                    <td>Color of the text. Any css value is allowed.</td>
+                    <td><code>optional</code><i>Default:</i> <code>#000</code></td>
+                </tr> 
+                <tr>
+                    <td>bg</td>
+                    <td>Background color. Any css value is allowed.</td>
+                    <td><code>optional</code><i>Default:</i> <code>#fff</code></td>
+                </tr>
+                <tr>
+                    <td>size</td>
+                    <td>Font size. Any css value is allowed. </td>
+                    <td><code>optional</code><i>Default:</i> <code>3rem</code></td>
+                </tr> 
+                <tr>
+                    <td>font</td>
+                    <td>Font family. Any family from google font. </td>
+                    <td><code>optional</code><i>Default:</i> <code>arial</code></td>
+                </tr>                 
+            </table>
 
             <h4>Create image from code. <small>(LAB)</small></h4>
 
@@ -53,19 +126,28 @@
 
             <h4>Convert html tables to json.</h4>
             <p >
-                Convert all tables on a web page to json format. Ex: <a href="api/table?url=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank">/api/table?url=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes</a>
+                Convert all tables on a web page to json format. Ex: <a href="api/table?url=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank"><b>/api/table</b>?url=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes</a>
             </p>
 
             <h4>Convert web page to json.</h4>
             <p >
-                Convert all web page to json format. Ex: <a href="api/html2json?url=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank">/api/<b>html2json</b>?<b>url</b>=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes</a>
+                Convert all web page to json format. Ex: <a href="api/html2json?url=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes" target="_blank"><b>/api/html2json</b>?<b>url</b>=https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes</a>
             </p>
+
+
 
 
         </div>
 
     </main>
-    
+    <footer >
+        <div class="container">
+            Made with <svg style="width: 2rem; height: 2rem; display: inline; vertical-align: middle;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M9 3a1 1 0 012 0v5.5a.5.5 0 001 0V4a1 1 0 112 0v4.5a.5.5 0 001 0V6a1 1 0 112 0v5a7 7 0 11-14 0V9a1 1 0 012 0v2.5a.5.5 0 001 0V4a1 1 0 012 0v4.5a.5.5 0 001 0V3z" clip-rule="evenodd" />
+    </svg> by <a href="https://twitter.com/sotoplatero" target="_blank">@sotoplatero</a>
+            
+        </div>
+    </footer>
     <!-- <script src="script.js"></script> -->
 </body>
 </html>
