@@ -1,19 +1,13 @@
 const chromium = require('chrome-aws-lambda');
-
 const localChrome = process.env.PATH_CHROME;
+var views = require("dot").process({ path: "../views"});
 var xss = require("xss");
-var path = require("path")
 
 exports.handler = async (event, context) => {
 
-    let prameters = event.queryStringParameters;
+    let {url} = event.queryStringParameters;
 
-    let qs = Object
-        .keys( prameters )
-        .map( k => k + '=' + xss(prameters[k]) )
-        .join('&');
-
-    if ( !prameters.text ) return {
+    if ( !prameters.url ) return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Text not defined' })
     }
@@ -30,7 +24,7 @@ exports.handler = async (event, context) => {
         
         // Open page base
         const page = await browser.newPage();
-        await page.goto( path.join( __dirname, "../public/txt2img.html?" + qs ), { waitUntil: 'networkidle0' });
+        await page.goto( host + `/txt2img.html?${qs}`,{ waitUntil: 'networkidle0' });
 
       
         const elCode = await page.$('#txt2img');
