@@ -1,18 +1,18 @@
 const chromium = require('chrome-aws-lambda');
 const localChrome = process.env.PATH_CHROME;
-var views = require("dot").process({ path: "../views"});
+var views = require("dot").process({ path: "./views"});
 var xss = require("xss");
 
 exports.handler = async (event, context) => {
 
     let {url} = event.queryStringParameters;
 
-    if ( !prameters.url ) return {
-        statusCode: 400,
-        body: JSON.stringify({ message: 'Text not defined' })
-    }
+    // if ( !prameters.url ) return {
+    //     statusCode: 400,
+    //     body: JSON.stringify({ message: 'Text not defined' })
+    // }
 
-    try {
+    // try {
         
         const browser = await chromium.puppeteer.launch({
             ignoreDefaultArgs: ['--disable-extensions'],
@@ -24,10 +24,11 @@ exports.handler = async (event, context) => {
         
         // Open page base
         const page = await browser.newPage();
-        await page.goto( host + `/txt2img.html?${qs}`,{ waitUntil: 'networkidle0' });
+        await page.setViewport({ width: 2048, height: 1170 });
+        await page.setContent( views.socialcard({ title: 'Titulo 2' }) );
 
       
-        const elCode = await page.$('#txt2img');
+        const elCode = await page.$('#card');
         const screenshot = await elCode.screenshot({ encoding: 'base64' });
         await browser.close();
 
@@ -41,15 +42,15 @@ exports.handler = async (event, context) => {
             isBase64Encoded: true            
         }     
 
-    } catch (e) {
+    // } catch (e) {
 
-        return {
-            headers: { 'Content-Type':'application/json'},            
-            statusCode: 500,
-            body: JSON.stringify({error: e}),   
-        }     
+    //     return {
+    //         headers: { 'Content-Type':'application/json'},            
+    //         statusCode: 500,
+    //         body: JSON.stringify({error: e}),   
+    //     }     
 
-    }
+    // }
     
 
 }
