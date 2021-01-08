@@ -3,17 +3,24 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-    <body class="h-screen w-screen max-w-screen-lg max-wh-screen-lg ">
+    <body class="
+        h-screen 
+        w-screen 
+        flex 
+        items-center 
+        bg-blue-700 
+        text-center
+    "
+    >
         <div 
             id="card"
             class="
-                w-full
-                h-full
-                mx-auto
+            h-full
+            w-full
+                text-white
             "
-        >sasas
-            <h1>{{=title}}</h1>
-            <p>{{=subtitle}}</p>
+        >
+            <h1 class="text-7xl text-center">{{=it.title}}</h1>
         </div>        
     </body>
 </html>

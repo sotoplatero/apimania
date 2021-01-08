@@ -1,6 +1,7 @@
 const chromium = require('chrome-aws-lambda');
 const localChrome = process.env.PATH_CHROME;
-var views = require("dot").process({ path: "./views"});
+const fs = require("fs");
+var dot = require("dot");
 var xss = require("xss");
 
 exports.handler = async (event, context) => {
@@ -25,11 +26,14 @@ exports.handler = async (event, context) => {
         // Open page base
         const page = await browser.newPage();
         await page.setViewport({ width: 2048, height: 1170 });
-        await page.setContent( views.socialcard({ title: 'Titulo 2' }) );
+
+        let tmpl = fs.readFileSync( __dirname + '/views/socialcard.html',"utf8");
+        const view = dot.template(tmpl);
+        await page.setContent( view({ title: 'Titulo 2' } ) ) ;
 
       
-        const elCode = await page.$('#card');
-        const screenshot = await elCode.screenshot({ encoding: 'base64' });
+        const card = await page.$('#card');
+        const screenshot = await card.screenshot({ encoding: 'base64' });
         await browser.close();
 
         return {
