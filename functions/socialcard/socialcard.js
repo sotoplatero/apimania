@@ -18,7 +18,7 @@ exports.handler = async (event, context) => {
 
     const response = await got( url );
     const $ = cheerio.load(response.body);
-    const title = $('title').text();
+    const title = $('title').first().text();
     const description = $('meta[name="description"],meta[property="description"],meta[property="og:description"],meta[name="twitter:description"]').attr('content')
     // try {
         
@@ -34,8 +34,9 @@ exports.handler = async (event, context) => {
         const page = await browser.newPage();
         await page.setViewport({ width: 1536, height: 768 }); // relation 1/2
 
-        const fileName = "./play.html"
-        const resolved = (process.env.LAMBDA_TASK_ROOT)? path.resolve(process.env.LAMBDA_TASK_ROOT, fileName):path.resolve(__dirname, fileName)        
+        const fileName = process.env.ENV==='local' ? "./play.html" : "./socialcard/play.html";
+        const resolved = (process.env.LAMBDA_TASK_ROOT) ? path.resolve(process.env.LAMBDA_TASK_ROOT, fileName) : path.resolve(__dirname, fileName)        
+        console.log(process.env.LAMBDA_TASK_ROOT)
         let tmpl = fs.readFileSync( resolved, "utf8" );
         const view = dot.template(tmpl);
 
