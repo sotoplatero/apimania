@@ -7,8 +7,6 @@ const path = require('path');
 const URL = require('url');
 var dot = require("dot");
 
-const currentDir = process.env.LAMBDA_TASK_ROOT;
-
 exports.handler = async (event, context) => {
 
     let {url} = event.queryStringParameters;
@@ -34,9 +32,11 @@ exports.handler = async (event, context) => {
         
         // Open page base
         const page = await browser.newPage();
-        await page.setViewport({ width: 1536, height: 768 });
+        await page.setViewport({ width: 1536, height: 768 }); // relation 1/2
 
-        let tmpl = fs.readFileSync( path.join( currentDir, '../views/socialcard.html'),"utf8");
+        const fileName = "./play.html"
+        const resolved = (process.env.LAMBDA_TASK_ROOT)? path.resolve(process.env.LAMBDA_TASK_ROOT, fileName):path.resolve(__dirname, fileName)        
+        let tmpl = fs.readFileSync( resolved, "utf8" );
         const view = dot.template(tmpl);
 
         await page.setContent( view({ 
