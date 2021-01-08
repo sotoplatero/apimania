@@ -11,10 +11,10 @@ exports.handler = async (event, context) => {
 
     let {url} = event.queryStringParameters;
     
-    // if ( !prameters.url ) return {
-    //     statusCode: 400,
-    //     body: JSON.stringify({ message: 'Text not defined' })
-    // }
+    if ( !url ) return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'url parameter not defined' })
+    }
 
     const response = await got( url );
     const $ = cheerio.load(response.body);
@@ -34,9 +34,14 @@ exports.handler = async (event, context) => {
         const page = await browser.newPage();
         await page.setViewport({ width: 1536, height: 768 });
 
-        let tmpl = fs.readFileSync( path.join(__dirname, '/views/socialcard.html'),"utf8");
+        let tmpl = fs.readFileSync( path.join(__dirname, '../views/socialcard.html'),"utf8");
         const view = dot.template(tmpl);
-        await page.setContent( view({ title: title, subtitle: description, domain: URL.parse(url).hostname } ) ) ;
+
+        await page.setContent( view({ 
+            title: title, 
+            subtitle: description, 
+            domain: URL.parse(url).hostname 
+        })) ;
 
       
         const card = await page.$('body');
