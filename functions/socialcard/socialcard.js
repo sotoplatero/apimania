@@ -20,7 +20,8 @@ exports.handler = async (event, context) => {
     const $ = cheerio.load(response.body);
     const title = $('title').first().text();
     const description = $('meta[name="description"],meta[property="description"],meta[property="og:description"],meta[name="twitter:description"]').attr('content')
-    // try {
+
+    try {
         
         const browser = await chromium.puppeteer.launch({
             ignoreDefaultArgs: ['--disable-extensions'],
@@ -34,10 +35,7 @@ exports.handler = async (event, context) => {
         const page = await browser.newPage();
         await page.setViewport({ width: 1536, height: 768 }); // relation 1/2
 
-        const fileName = process.env.ENV==='local' ? "./play.html" : "./socialcard/play.html";
-        // const resolved = (process.env.LAMBDA_TASK_ROOT) ? path.resolve(process.env.LAMBDA_TASK_ROOT, fileName) : path.resolve(__dirname, fileName)        
         const resolved = path.resolve(__dirname, "./play.html")        
-        console.log(process.env.LAMBDA_TASK_ROOT)
         let tmpl = fs.readFileSync( resolved, "utf8" );
         const view = dot.template(tmpl);
 
@@ -62,15 +60,15 @@ exports.handler = async (event, context) => {
             isBase64Encoded: true            
         }     
 
-    // } catch (e) {
+    } catch (e) {
 
-    //     return {
-    //         headers: { 'Content-Type':'application/json'},            
-    //         statusCode: 500,
-    //         body: JSON.stringify({error: e}),   
-    //     }     
+        return {
+            headers: { 'Content-Type':'application/json'},            
+            statusCode: 500,
+            body: JSON.stringify({ message: 'Error' }),   
+        }     
 
-    // }
+    }
     
 
 }
