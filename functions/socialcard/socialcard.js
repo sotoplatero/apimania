@@ -36,7 +36,7 @@ exports.handler = async (event, context) => {
 
         const fileName = process.env.ENV==='local' ? "./play.html" : "./socialcard/play.html";
         // const resolved = (process.env.LAMBDA_TASK_ROOT) ? path.resolve(process.env.LAMBDA_TASK_ROOT, fileName) : path.resolve(__dirname, fileName)        
-        const resolved = path.resolve(__dirname, fileName)        
+        const resolved = path.resolve(__dirname, "./play.html")        
         console.log(process.env.LAMBDA_TASK_ROOT)
         let tmpl = fs.readFileSync( resolved, "utf8" );
         const view = dot.template(tmpl);
