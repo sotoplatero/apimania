@@ -1,18 +1,25 @@
 const chromium = require('chrome-aws-lambda');
 const localChrome = process.env.PATH_CHROME;
+const got = require("got");
+const cheerio = require("cheerio");
 const fs = require("fs");
+const path = require('path');
+const URL = require('url');
 var dot = require("dot");
-var xss = require("xss");
 
 exports.handler = async (event, context) => {
 
     let {url} = event.queryStringParameters;
+    
+    if ( !url ) return {
+        statusCode: 400,
+        body: JSON.stringify({ message: 'url parameter not defined' })
+    }
 
-    // if ( !prameters.url ) return {
-    //     statusCode: 400,
-    //     body: JSON.stringify({ message: 'Text not defined' })
-    // }
-
+    const response = await got( url );
+    const $ = cheerio.load(response.body);
+    const title = $('title').first().text();
+    const description = $('meta[name="description"],meta[property="description"],meta[property="og:description"],meta[name="twitter:description"]').attr('content')
     // try {
         
         const browser = await chromium.puppeteer.launch({
@@ -25,14 +32,23 @@ exports.handler = async (event, context) => {
         
         // Open page base
         const page = await browser.newPage();
-        await page.setViewport({ width: 2048, height: 1170 });
+        await page.setViewport({ width: 1536, height: 768 }); // relation 1/2
 
-        let tmpl = fs.readFileSync( __dirname + '/views/socialcard.html',"utf8");
+        const fileName = process.env.ENV==='local' ? "./play.html" : "./socialcard/play.html";
+        // const resolved = (process.env.LAMBDA_TASK_ROOT) ? path.resolve(process.env.LAMBDA_TASK_ROOT, fileName) : path.resolve(__dirname, fileName)        
+        const resolved = path.resolve(__dirname, fileName)        
+        console.log(process.env.LAMBDA_TASK_ROOT)
+        let tmpl = fs.readFileSync( resolved, "utf8" );
         const view = dot.template(tmpl);
-        await page.setContent( view({ title: 'Titulo 2' } ) ) ;
+
+        await page.setContent( view({ 
+            title: title, 
+            subtitle: description, 
+            domain: URL.parse(url).hostname 
+        })) ;
 
       
-        const card = await page.$('#card');
+        const card = await page.$('body');
         const screenshot = await card.screenshot({ encoding: 'base64' });
         await browser.close();
 
