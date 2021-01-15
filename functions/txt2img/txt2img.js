@@ -3,22 +3,24 @@ const chromium = require('chrome-aws-lambda');
 const localChrome = process.env.PATH_CHROME;
 var xss = require("xss");
 var path = require("path")
+const fs = require("fs");
+var dot = require("dot");
 
 exports.handler = async (event, context) => {
 
-    let prameters = event.queryStringParameters;
+    let parameters = event.queryStringParameters;
 
     let qs = Object
-        .keys( prameters )
-        .map( k => k + '=' + xss(prameters[k]) )
+        .keys( parameters )
+        .map( k => k + '=' + xss(parameters[k]) )
         .join('&');
 
-    if ( !prameters.text ) return {
+    if ( !parameters.text ) return {
         statusCode: 400,
         body: JSON.stringify({ message: 'Text not defined' })
     }
 
-    try {
+    // try {
         
         const browser = await chromium.puppeteer.launch({
             ignoreDefaultArgs: ['--disable-extensions'],
@@ -30,9 +32,9 @@ exports.handler = async (event, context) => {
         
         // Open page base
         const page = await browser.newPage();
-        // const resolved = path.resolve(__dirname, `./${theme}.html`)      
-        await page.goto( path.resolve( __dirname, "../public/txt2img.html?" + qs ), { waitUntil: 'networkidle0' });
-
+        let tmpl = fs.readFileSync( path.resolve(__dirname, "./layout.html"), "utf8" );
+        const view = dot.template(tmpl);
+        await page.setContent( view(parameters) ) ;
       
         const elCode = await page.$('#txt2img');
         const screenshot = await elCode.screenshot({ encoding: 'base64' });
@@ -48,15 +50,15 @@ exports.handler = async (event, context) => {
             isBase64Encoded: true            
         }     
 
-    } catch (e) {
+    // } catch (e) {
 
-        return {
-            headers: { 'Content-Type':'application/json'},            
-            statusCode: 500,
-            body: JSON.stringify({error: e}),   
-        }     
+    //     return {
+    //         headers: { 'Content-Type':'application/json'},            
+    //         statusCode: 500,
+    //         body: JSON.stringify({error: e}),   
+    //     }     
 
-    }
+    // }
     
 
 }
