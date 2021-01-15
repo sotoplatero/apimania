@@ -30,7 +30,8 @@ exports.handler = async (event, context) => {
         
         // Open page base
         const page = await browser.newPage();
-        await page.goto( path.join( __dirname, "../public/txt2img.html?" + qs ), { waitUntil: 'networkidle0' });
+        // const resolved = path.resolve(__dirname, `./${theme}.html`)      
+        await page.goto( path.resolve( __dirname, "../public/txt2img.html?" + qs ), { waitUntil: 'networkidle0' });
 
       
         const elCode = await page.$('#txt2img');
