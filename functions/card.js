@@ -38,14 +38,7 @@ exports.handler = async (event, context) => {
         const page = await browser.newPage();
         const host = (process.env.ENV === 'local') ? 'http://localhost:8888' : 'https://apimania.netlify.app'
         await page.goto( host + `/card.html?user=${user}&title=${title}`,{ waitUntil: 'networkidle0' });
-
-        // await page.waitForFunction( (title, user) => {
-
-        //     document.querySelector('h1').innerText = title;
-        //     document.querySelector('img').src = 'https://unavatar.now.sh/' + user;
-
-        // }, title, user)
-        
+       
         const card = await page.$('#card');
         const screenshot = await card.screenshot({ encoding: 'base64' });
         await browser.close();

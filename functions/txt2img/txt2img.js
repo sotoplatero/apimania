@@ -8,12 +8,10 @@ var dot = require("dot");
 
 exports.handler = async (event, context) => {
 
+    // let qs = event.queryStringParameters;
+    // Object.keys(qs).forEach((key, index) => qs[key] = xss(qs[key]));
     let parameters = event.queryStringParameters;
-
-    let qs = Object
-        .keys( parameters )
-        .map( k => k + '=' + xss(parameters[k]) )
-        .join('&');
+    console.log(parameters)
 
     if ( !parameters.text ) return {
         statusCode: 400,
@@ -32,7 +30,7 @@ exports.handler = async (event, context) => {
         
         // Open page base
         const page = await browser.newPage();
-        await page.setViewport({ width: 1536, height: 768 }); // relation 1/2        
+        await page.setViewport({ width: 1280, height: 640 }); // relation 1/2        
         let tmpl = fs.readFileSync( path.resolve(__dirname, "./layout.html"), "utf8" );
         const view = dot.template(tmpl);
         await page.setContent( view(parameters) ) ;
@@ -40,7 +38,7 @@ exports.handler = async (event, context) => {
             let text = document.querySelector('h1')
             do {
                 text.style.fontSize =  (parseInt(text.style.fontSize) - 1) + 'px'
-            } while (text.offsetHeight > 768 || text.offsetWidth > 1536);            
+            } while (text.offsetHeight > 640 || text.offsetWidth > 1280);            
         })
       
         const elCode = await page.$('#txt2img');
