@@ -7,7 +7,7 @@ exports.handler = async (event, context) => {
     try {
         const html = await got('https://www.gacetaoficial.gob.cu/es').then( res => res.body)
         const $ = cheerio.load(html);
-        console.log($('.views-field-field-numero-de-gaceta ').text())
+
         const data = {
             type: $('.views-field-field-tipo-edicion-gaceta .field-content').text(),
             date: $('.views-field-field-fecha-gaceta .field-content span').attr('content'),

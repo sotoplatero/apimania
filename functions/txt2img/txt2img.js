@@ -8,15 +8,15 @@ var dot = require("dot");
 
 exports.handler = async (event, context) => {
 
-    // let qs = event.queryStringParameters;
-    // Object.keys(qs).forEach((key, index) => qs[key] = xss(qs[key]));
-    let parameters = event.queryStringParameters;
-    console.log(parameters)
+    let qs = event.queryStringParameters;
+    Object.keys(qs).forEach((key, index) => qs[key] = xss(qs[key]));
+    let parameters = qs;
 
-    if ( !parameters.text ) return {
-        statusCode: 400,
-        body: JSON.stringify({ message: 'Text not defined' })
-    }
+    parameters.text = parameters.text
+        .replace(/\*\*(.+)\*\*/g,'<strong style="font-weight: 900;">$1</strong>')
+        .replace(/\*(.+)\*/g,'<em>$1</em>')
+        .replace(/\_(.+)\_/g,'<span style="text-decoration: underline;">$1</span>')
+        .replace(/\./g,'<br/>');
 
     try {
         
@@ -29,10 +29,11 @@ exports.handler = async (event, context) => {
         });
         
         // Open page base
-        const page = await browser.newPage();
-        await page.setViewport({ width: 1280, height: 640 }); // relation 1/2        
         let tmpl = fs.readFileSync( path.resolve(__dirname, "./layout.html"), "utf8" );
         const view = dot.template(tmpl);
+        
+        const page = await browser.newPage();
+        await page.setViewport({ width: 1280, height: 640 }); // relation 1/2        
         await page.setContent( view(parameters) ) ;
         await page.evaluate( () => {
             let text = document.querySelector('h1')
