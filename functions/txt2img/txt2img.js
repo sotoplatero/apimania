@@ -18,7 +18,7 @@ exports.handler = async (event, context) => {
         .replace(/\_(.+)\_/g,'<span style="text-decoration: underline;">$1</span>')
         .replace(/\./g,'<br/>');
 
-    try {
+    // try {
         
         const browser = await chromium.puppeteer.launch({
             ignoreDefaultArgs: ['--disable-extensions'],
@@ -31,21 +31,29 @@ exports.handler = async (event, context) => {
         // Open page base
         let tmpl = fs.readFileSync( path.resolve(__dirname, "./layout.html"), "utf8" );
         const view = dot.template(tmpl);
-        
+
+        const height = 1280
+        const width = {
+            '1-1': 1280,
+            '1-2': 640,
+            '4-3': 960,
+            '16-9': 720,
+        }[qs.format || '1-2']
+
         const page = await browser.newPage();
-        await page.setViewport({ width: 1280, height: 640 }); // relation 1/2        
+        await page.setViewport({ width: width, height: height }); // relation 1/2        
         await page.setContent( view(parameters) ) ;
         await page.evaluate( () => {
             let text = document.querySelector('h1')
             do {
                 text.style.fontSize =  (parseInt(text.style.fontSize) - 1) + 'px'
-            } while (text.offsetHeight > 640 || text.offsetWidth > 1280);            
+            } while (text.offsetHeight > height || text.offsetWidth > width);            
         })
       
         const elCode = await page.$('#txt2img');
         const screenshot = await elCode.screenshot({ encoding: 'base64' });
         await browser.close();
-
+        console.log(screenshot)
         return {
             statusCode: 200,
             headers: { 
@@ -56,15 +64,15 @@ exports.handler = async (event, context) => {
             isBase64Encoded: true            
         }     
 
-    } catch (e) {
+    // } catch (e) {
 
-        return {
-            headers: { 'Content-Type':'application/json'},            
-            statusCode: 500,
-            body: JSON.stringify({error: e}),   
-        }     
+    //     return {
+    //         headers: { 'Content-Type':'application/json'},            
+    //         statusCode: 500,
+    //         body: JSON.stringify({error: e}),   
+    //     }     
 
-    }
+    // }
     
 
 }

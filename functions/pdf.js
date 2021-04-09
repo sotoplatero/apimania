@@ -24,6 +24,7 @@ exports.handler = async (event, context) => {
     await page.goto(url, { waitUntil: 'networkidle2' });
     const title = await page.title();
 
+    await page.emulateMediaType('screen')
     const pdf = await page.pdf();
     await browser.close();
   
