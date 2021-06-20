@@ -26,6 +26,7 @@ exports.handler = async (event, context) => {
             defaultViewport: chromium.defaultViewport,
             executablePath: localChrome || await chromium.executablePath,
             headless: chromium.headless,
+            // headless: false,
         });
         
         // Open page base
@@ -43,17 +44,16 @@ exports.handler = async (event, context) => {
         const page = await browser.newPage();
         await page.setViewport({ width: width, height: height }); // relation 1/2        
         await page.setContent( view(parameters) ) ;
-        await page.evaluate( () => {
+        await page.evaluate( (width,height) => {
             let text = document.querySelector('h1')
             do {
                 text.style.fontSize =  (parseInt(text.style.fontSize) - 1) + 'px'
             } while (text.offsetHeight > height || text.offsetWidth > width);            
-        })
+        },width,height)
       
         const elCode = await page.$('#txt2img');
         const screenshot = await elCode.screenshot({ encoding: 'base64' });
         await browser.close();
-        console.log(screenshot)
         return {
             statusCode: 200,
             headers: { 
