@@ -10,6 +10,8 @@ publish = "public"
 	from = "/api/socialcard.jpg"
 	to = "/.netlify/functions/socialcard"
 	status = 200
+	
+[[redirects]]
 	from = "/api/i.png"
 	to = "/.netlify/functions/i"
 	status = 200
