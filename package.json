@@ -10,8 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "@octokit/rest": "^18.12.0",
-    "@prettier/plugin-php": "^0.16.3",
-    "browserless": "^9.3.5",
     "cheerio": "^1.0.0-rc.10",
     "chrome-aws-lambda": "^10.1.0",
     "dot": "^2.0.0-beta.1",
@@ -19,8 +17,6 @@
     "got": "^11.8.3",
     "highlight.js": "^10.7.3",
     "himalaya": "^1.1.0",
-    "prettier": "^2.5.1",
-    "puppeteer": "^13.1.1",
     "puppeteer-core": "^13.1.1",
     "slugify": "^1.6.5",
     "tabletojson": "^2.0.7",
