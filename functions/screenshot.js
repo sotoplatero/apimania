@@ -87,6 +87,7 @@ exports.handler = async (event, context) => {
         headers: { 
             'Content-type': 'image/jpeg',
             'Access-Control-Allow-Origin': '*',
+            'Cache-Control': 'public, immutable, no-transform, s-maxage=31536000, max-age=31536000',
         },
         body: screenshot.toString("base64"),   
         isBase64Encoded: true,           
