@@ -3,7 +3,43 @@ const chromium = require('chrome-aws-lambda');
 
 // the browser path
 const localChrome = process.env.PATH_CHROME;
-
+const minimal_args = [
+  '--autoplay-policy=user-gesture-required',
+  '--disable-background-networking',
+  '--disable-background-timer-throttling',
+  '--disable-backgrounding-occluded-windows',
+  '--disable-breakpad',
+  '--disable-client-side-phishing-detection',
+  '--disable-component-update',
+  '--disable-default-apps',
+  '--disable-dev-shm-usage',
+  '--disable-domain-reliability',
+  '--disable-extensions',
+  '--disable-features=AudioServiceOutOfProcess',
+  '--disable-hang-monitor',
+  '--disable-ipc-flooding-protection',
+  '--disable-notifications',
+  '--disable-offer-store-unmasked-wallet-cards',
+  '--disable-popup-blocking',
+  '--disable-print-preview',
+  '--disable-prompt-on-repost',
+  '--disable-renderer-backgrounding',
+  '--disable-setuid-sandbox',
+  '--disable-speech-api',
+  '--disable-sync',
+  '--hide-scrollbars',
+  '--ignore-gpu-blacklist',
+  '--metrics-recording-only',
+  '--mute-audio',
+  '--no-default-browser-check',
+  '--no-first-run',
+  '--no-pings',
+  '--no-sandbox',
+  '--no-zygote',
+  '--password-store=basic',
+  '--use-gl=swiftshader',
+  '--use-mock-keychain',
+];
 exports.handler = async (event, context) => {
 
     let  { url, size = 'window' } = event.queryStringParameters
@@ -14,11 +50,11 @@ exports.handler = async (event, context) => {
     }
 
     const browser = await chromium.puppeteer.launch({
-        ignoreDefaultArgs: ['--disable-extensions'],
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
+        // ignoreDefaultArgs: ['--disable-extensions'],
+        args: minimal_args,
+        // defaultViewport: chromium.defaultViewport,
         executablePath: localChrome || await chromium.executablePath,
-        headless: chromium.headless,
+        // headless: chromium.headless,
     });
     
     const page = await browser.newPage();
@@ -26,7 +62,6 @@ exports.handler = async (event, context) => {
     const title = await page.title();
 
     let screenshot;
-    console.log(size)
     if ( /window|full/.test(size) ) {
 
         screenshot = await page.screenshot({ 
@@ -41,7 +76,7 @@ exports.handler = async (event, context) => {
             statusCode: 400,
             body: JSON.stringify({ message: 'Element by selector not exist' })
         }        
-        screenshot = await el.screenshot({ encoding: 'base64' });
+        screenshot = await el.screenshot({ type: 'jpeg', quality: 75, });
 
     }
 
@@ -49,9 +84,12 @@ exports.handler = async (event, context) => {
     
     return {
         statusCode: 200,
-        headers: { 'Content-type': 'image/jpeg' },
-        body: screenshot,   
-        isBase64Encoded: true            
+        headers: { 
+            'Content-type': 'image/jpeg',
+            'Access-Control-Allow-Origin': '*',
+        },
+        body: screenshot.toString("base64"),   
+        isBase64Encoded: true,           
     }     
 
 
