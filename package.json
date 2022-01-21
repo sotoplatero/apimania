@@ -20,7 +20,6 @@
     "puppeteer-core": "^13.1.1",
     "slugify": "^1.6.5",
     "tabletojson": "^2.0.7",
-    "twit": "^2.2.11",
     "xml-js": "^1.6.11",
     "xss": "^1.0.10"
   }
