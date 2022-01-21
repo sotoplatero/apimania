@@ -11,7 +11,7 @@
   "dependencies": {
     "@octokit/rest": "^18.12.0",
     "cheerio": "^1.0.0-rc.10",
-    "chrome-aws-lambda": "^10.1.0",
+    "chrome-aws-lambda": "^7.0.0",
     "dot": "^2.0.0-beta.1",
     "eta": "^1.12.3",
     "got": "^11.8.3",
